@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -20,29 +20,31 @@ const GreenCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 export const MyCheckbox = (props) => {
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-  });
+  const [state, setState] = React.useState();
+  const [ansData, setAnsData] = useState([]);
+
+  useEffect(() => {
+    setAnsData([...ansData, state]);
+  }, [state]);
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setState(event.target.name);
+    // alert(state)
   };
-
+  console.log(ansData);
   return (
-    <FormGroup row>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={state.checkedA}
-            onChange={handleChange}
-            name="checkedA"
-          />
-        }
-        label={props.label}
-      />
+    <FormGroup>
+      {props.AnswerList.map((data, ind) => {
+        return (
+          <ul>
+            <FormControlLabel
+              key={ind}
+              control={<Checkbox onChange={handleChange} name={data} />}
+              label={data}
+            />
+          </ul>
+        );
+      })}
     </FormGroup>
   );
 };

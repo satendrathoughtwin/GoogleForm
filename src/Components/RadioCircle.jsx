@@ -10,7 +10,7 @@ export const MyRadio = (props) => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    alert(value)
+    // alert(value);
   };
 
   return (
@@ -21,11 +21,17 @@ export const MyRadio = (props) => {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel
-          value={props.label}
-          control={<Radio />}
-          label={props.label}
-        />
+        {props.AnswerList.map((data, ind) => {
+          return (
+            <FormControlLabel
+              key={ind}
+              value={data}
+              control={<Radio />}
+              label={data}
+            />
+          );
+        })}
+      
       </RadioGroup>
     </FormControl>
   );

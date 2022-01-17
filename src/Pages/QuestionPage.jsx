@@ -143,7 +143,13 @@ export const QuestionPage = (props) => {
                         ""
                       )}
 
-                      {data.AnswerList.map((res, ind) => {
+                      {data.AnswerType === "Single Select radio" ? (
+                        <MyRadio AnswerList={data.AnswerList} />
+                      ) : (
+                        <MyCheckbox AnswerList={data.AnswerList} />
+                      )}
+
+                      {/* {data.AnswerList.map((res, ind) => {
                         return (
                           <>
                             <ul>
@@ -155,7 +161,7 @@ export const QuestionPage = (props) => {
                             </ul>
                           </>
                         );
-                      })}
+                      })} */}
                     </Grid>
                   </Grid>
                 </Typography>

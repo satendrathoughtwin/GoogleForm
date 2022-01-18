@@ -6,7 +6,8 @@ import {
   changeTheFromTitle,
   changeTheFormQuestion,
   changeTheFormAnswerType,
-  changeTheFormAnswerList
+  changeTheFormAnswerList,
+  changeTheFormQuestionUpdate
 } from "./operations";
 import { combineReducers } from "redux";
 
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   changeTheFromTitle,
   changeTheFormQuestion,
   changeTheFormAnswerType,
-  changeTheFormAnswerList
+  changeTheFormAnswerList,
+  changeTheFormQuestionUpdate
 });
 
 export default rootReducer;

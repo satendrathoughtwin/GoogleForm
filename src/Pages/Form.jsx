@@ -4,12 +4,16 @@ import Container from "@material-ui/core/Container";
 import { FormCard, TitleCard } from "../Components/Card";
 import { QuestionPage } from "./QuestionPage";
 import { useParams } from "react-router";
+import { Button } from "@material-ui/core";
+import { useNavigate  } from "react-router";
 
 export const Form = () => {
   const { id } = useParams();
+  const navigate = useNavigate ()
   return (
     <>
-      <div Style={{ marginTop: "80px" }}></div>
+      <div style={{ marginTop: "10px" }}></div>
+      <Button style={{ marginTop: "10px" }} onClick={()=> navigate("/") }> Go Back</Button>
       <Container maxWidth="md">
         {id ? (
           <>

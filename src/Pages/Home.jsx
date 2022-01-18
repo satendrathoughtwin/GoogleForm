@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { getForm } from "../Services/FormApi";
+import { deleteFormId, getForm } from "../Services/FormApi";
 import { Button } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -36,13 +36,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const Home = () => {
   const classes = useStyles();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [FromData, setFormData] = useState([]);
   useEffect(async () => {
     const result = await getForm();
     setFormData(result);
     console.log("response data from form ", result);
   }, []);
+  const deleteForm = async (id) => {
+    const result = await deleteFormId(id);
+    if (result) {
+      const res = await getForm();
+      setFormData(res);
+    }
+  };
   return (
     <div className={classes.root}>
       <Grid container spacing={3} style={{ dextDecoration: "none" }}>
@@ -100,21 +107,27 @@ export const Home = () => {
         {FromData.map((data, ind) => {
           return (
             <>
-              <Grid item xs={2} key={ind} style={{textAlign : "center"}} onClick={()=>navigate(`/form/${data._id}`,true)}>
-                <Paper className={classes.paper1}>
-                  <div className={classes.divHight}></div>
-                  <hr></hr>
+              <Grid item xs={2} key={ind} style={{ textAlign: "center" }}>
+                <div className={classes.paper1}>
+                  <Paper onClick={() => navigate(`/form/${data._id}`, true)}>
+                    <div className={classes.divHight}></div>
+                    <hr></hr>
+                  </Paper>
                   <div>
                     <h4>{data.title}</h4>
-                    <p className={classes.pfont}>
-                      {data.createdAt}
+                    <p>
+                      <span className={classes.pfont}>{data.createdAt}</span>
                       <span>
-                        <MoreVertIcon />
+                        <MoreVertIcon
+                          onClick={() => {
+                            deleteForm(data._id);
+                          }}
+                        />
                       </span>
                     </p>
                   </div>
-                 
-                </Paper>
+                </div>
+
                 <h5>{data.formName}</h5>
               </Grid>
             </>

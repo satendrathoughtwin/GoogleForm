@@ -21,6 +21,7 @@ export const MyTextField =(props) =>{
       <TextField id="standard-basic" label={props.title}  style={{ width: props.width}}
         value={question}
         onChange={e=>dispatch(FormQuestion(e.target.value))}
+        required label="Question"
       />
   );
 }

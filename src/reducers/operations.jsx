@@ -91,14 +91,25 @@ const changeTheFormAnswerList = (state = [], action) => {
   }
 };
 
+const isQuestionAdded = false;
+const changeTheFormQuestionUpdate = (state = isQuestionAdded, action) => {
+  switch (action.type) {
+    case "setQuestionUpdate":
+      return action.payload;
+      break;
+    default:
+      return state;
+  }
+};
+
 export default changeTheDialogStatus;
 export {
-//   changeTheFromData,
+  //   changeTheFromData,
   changeTheFromDesciption,
   changeTheFromName,
   changeTheFromTitle,
   changeTheFormQuestion,
   changeTheFormAnswerType,
-  changeTheFormAnswerList
+  changeTheFormAnswerList,
+  changeTheFormQuestionUpdate,
 };
-

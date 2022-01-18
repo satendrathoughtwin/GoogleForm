@@ -31,7 +31,7 @@ export const MyCheckbox = (props) => {
     setState(event.target.name);
     // alert(state)
   };
-  console.log(ansData);
+  // console.log(ansData);
   return (
     <FormGroup>
       {props.AnswerList.map((data, ind) => {

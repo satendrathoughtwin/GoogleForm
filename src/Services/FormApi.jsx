@@ -65,6 +65,30 @@ const deleteQuestionById = async (id, arreleid) => {
   }
 };
 
+const updateQuestionById = async (id, arreleid) => {
+  try {
+    const result = await axios.patch(
+      `http://localhost:8000/api/form/${id}/${arreleid}`
+    );
+    if (result) {
+      return result.data.data;
+    }
+  } catch (err) {
+    console.log("Form find data Error: ", err.message);
+  }
+};
+
+const deleteFormId = async (id) => {
+  try {
+    const result = await axios.delete(`http://localhost:8000/api/form/${id}`);
+    if (result) {
+      return result.data.data;
+    }
+  } catch (err) {
+    console.log("Form delete data Error: ", err.message);
+  }
+};
+
 const updateFormById = async (id, title, description, formName, QuesANS) => {
   // req.body.QuesANS[0]
 
@@ -77,7 +101,7 @@ const updateFormById = async (id, title, description, formName, QuesANS) => {
     title,
     description,
     formName,
-    QuesANS : Data,
+    QuesANS: Data,
   };
 
   try {
@@ -100,4 +124,6 @@ export {
   getFormById,
   updateFormById,
   getlatestFormForm,
+  deleteFormId,
+  updateQuestionById
 };

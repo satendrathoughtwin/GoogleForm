@@ -21,10 +21,18 @@ import {
 } from "../Services/FormApi";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
-import { FormTitle, FormDescription, OpenDialog, FormName, FormQuestion } from "../action";
+import {
+  FormTitle,
+  FormDescription,
+  OpenDialog,
+  FormName,
+  FormQuestion,
+  FormQuestionUpdate,
+  FormAnswerList,
+} from "../action";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 const useStyles = makeStyles({
   root: {
@@ -72,10 +80,10 @@ export const TitleCard = (props) => {
       const result = await getFormById(props.id);
       if (result) {
         setFormData(result);
-        console.log("form Data find", result[0].title);
-        dispatch(FormName(result[0].formName))
-        dispatch(FormTitle(result[0].title ))
-        dispatch(FormDescription(result[0].description))
+        // console.log("form Data find", result[0].title);
+        dispatch(FormName(result[0].formName));
+        dispatch(FormTitle(result[0].title));
+        dispatch(FormDescription(result[0].description));
       }
     } catch (err) {
       console.log("find form Data Error", err.message);
@@ -92,15 +100,15 @@ export const TitleCard = (props) => {
         >
           {show ? (
             formData.length > 0 ? (
-              formData.map((data,ind) => {
+              formData.map((data, ind) => {
                 return (
-                  <div key ={ind}>
+                  <div key={ind}>
                     <TextField
                       id="standard-basic"
                       label="Form Title"
                       style={{ width: "100ch" }}
                       // value={title ||data.title }
-                      value={title }
+                      value={title}
                       onChange={(e) => dispatch(FormTitle(e.target.value))}
                     />
 
@@ -164,13 +172,13 @@ export const FormCard = (props) => {
   const unique_id = uuid();
   const options = [
     { title: "Text" },
-    { title: "Single Select radio" },
+    { title: "Multiple Choice" },
     { title: "Multichoice Checkbox" },
   ];
   const [optionsState, setOptionsState] = useState("");
   const title = useSelector((state) => state.changeTheFromTitle);
   const description = useSelector((state) => state.changeTheFromDesciption);
-  const [uniqId, setUniqId] = useState()
+  const [uniqId, setUniqId] = useState();
   const name = useSelector((state) => state.changeTheFromName);
   const Question = useSelector((state) => state.changeTheFormQuestion);
   const AnswerType = useSelector((state) => state.changeTheFormAnswerType);
@@ -178,20 +186,16 @@ export const FormCard = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("this is answer list", AnswerList);
-  useEffect(async()=>{
-    const result = await getForm()
-    setUniqId (result[0].QuesANS.length)
-  
-  },[uniqId])
-  
-  const uniqueId= () => async()=> {
-    
+  // console.log("this is answer list", AnswerList);
+  useEffect(async () => {
+    const result = await getForm();
+    setUniqId(result[0].QuesANS.length);
+  }, [uniqId]);
 
-  }
-console.log("unique id",uniqueId())
+  const uniqueId = () => async () => {};
+  // console.log("unique id", uniqueId());
   let QuesANS = [
-    { id: Math.random() +1/100*56 , Question, AnswerType, AnswerList },
+    { id: Math.random() + (1 / 100) * 56, Question, AnswerType, AnswerList },
   ];
 
   const collectFormData = async () => {
@@ -210,26 +214,31 @@ console.log("unique id",uniqueId())
       }
     }
   };
-  useEffect(async()=>{
-   
-  },[])
-
-  
 
   const updateFormData = async () => {
-    if(QuesANS.length!==0){
-    dispatch(OpenDialog(false));
-    const result = await updateFormById(props.id,title, description, name, QuesANS);
-    setShowCard(true);
-    dispatch(OpenDialog(true));
-    dispatch(FormQuestion(''))
-    QuesANS = []
-    console.log("updated form data ", result);
+    console.log("testing purpose",QuesANS[0].Question !=="")
+    if (QuesANS[0].Question !=="" || QuesANS[0].Question !==""&& QuesANS.length !== 0) {
+      dispatch(OpenDialog(false));
+      dispatch(FormQuestionUpdate(false));
+      const result = await updateFormById(
+        props.id,
+        title,
+        description,
+        name,
+        QuesANS
+      );
+      setShowCard(true);
+      dispatch(OpenDialog(true));
+      dispatch(FormQuestion(""));
+      dispatch(FormQuestionUpdate(true));
+      dispatch(FormAnswerList([]))
+      QuesANS = [];
+      // console.log("updated form data ", result);
+    } else {
+      dispatch(FormQuestionUpdate(false));
+      swal("Wait ...", "Add Query First", "info");
+      dispatch(FormQuestionUpdate(true));
     }
-    else{
-      swal("Wait ...","Add Query First","info")
-    }
-    
   };
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 0fr" }}>
@@ -275,7 +284,7 @@ console.log("unique id",uniqueId())
               type="radio"
               value={optionsState}
               onChange={(e) => setOptionsState(e.target.value)}
-            />
+                          />
             {/* it will decide answertype */}
             <RadioButtonsGroup actionType={ansType} />
           </CardContent>
@@ -285,7 +294,7 @@ console.log("unique id",uniqueId())
               <Grid item xs={8}></Grid>
               <Grid item xs={4}>
                 <Fab aria-label="add" size="small">
-                  <DeleteIcon  onClick={() => setShowCard(false)}/>
+                  <DeleteIcon onClick={() => setShowCard(false)} />
                 </Fab>
               </Grid>
             </Grid>
@@ -304,7 +313,7 @@ console.log("unique id",uniqueId())
               color="textSecondary"
               gutterBottom
             >
-              <h1>Add Your Query</h1>
+              <h1>Add Your Question</h1>
             </Typography>
           </CardContent>
         </Card>

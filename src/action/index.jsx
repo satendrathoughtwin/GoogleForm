@@ -32,3 +32,7 @@ export const FormAnswerType = (answerType) => {
 export const FormAnswerList = (answerList) => {
   return { type: "setAnswerList", payload: answerList };
 };
+
+export const FormQuestionUpdate = (isUpdate) => {
+  return { type: "setQuestionUpdate", payload: isUpdate };
+};

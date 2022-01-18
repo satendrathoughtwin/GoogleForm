@@ -61,7 +61,7 @@ export const QuestionPage = (props) => {
     const result = await getFormById(props.id);
     if (result) {
       // console.log("all form data ", result);
-      console.log("form data by id", result);
+      // console.log("form data by id", result);
       setFormData(result[0].QuesANS);
       // console.log("all form data ", formData);
     }
@@ -70,7 +70,7 @@ export const QuestionPage = (props) => {
     const result = await getFormById(props.id);
     if (result) {
       // console.log("all form data ", result);
-      console.log("form data by id", result);
+      // console.log("form data by id", result);
       setFormData(result[0].QuesANS);
       // console.log("all form data ", formData);
     }
@@ -143,25 +143,11 @@ export const QuestionPage = (props) => {
                         ""
                       )}
 
-                      {data.AnswerType === "Single Select radio" ? (
+                      {data.AnswerType === "Multiple Choice" ? (
                         <MyRadio AnswerList={data.AnswerList} />
                       ) : (
                         <MyCheckbox AnswerList={data.AnswerList} />
                       )}
-
-                      {/* {data.AnswerList.map((res, ind) => {
-                        return (
-                          <>
-                            <ul>
-                              {data.AnswerType === "Single Select radio" ? (
-                                <MyRadio label ={res}/>
-                              ) : (
-                                <MyCheckbox label={res} />
-                              )}
-                            </ul>
-                          </>
-                        );
-                      })} */}
                     </Grid>
                   </Grid>
                 </Typography>

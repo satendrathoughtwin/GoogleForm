@@ -16,7 +16,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { FormName } from "../action";
 import { useDispatch, useSelector } from "react-redux";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -194,7 +194,9 @@ export const Navbar = () => {
               onChange={(e) => dispatch(FormName(e.target.value))}
             />
           </div>
+          
 
+          <p style={{ margin: 10 }}>Questions</p>
           <p style={{ margin: 10 }}>Responses</p>
           <p style={{ margin: 10 }}>Settings</p>
           <div className={classes.grow} />
